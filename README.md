@@ -1,3 +1,3 @@
 #### 短链接服务
 
-#### START
+#### HOW TO START
