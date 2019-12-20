@@ -33,3 +33,40 @@ CREATE TABLE `short_url` (
    get `{"status":200,"data":"http://127.0.0.1:8080/s/vqvuRw","msg":""}`  
    
 4. **visit http://127.0.0.1:8080/s/vqvuRw**  
+
+### HOW SERVER DO 
+
+#### 生成短链接 
+     利用数据库自增ID生成唯一字符串.
+##### 唯一token生成算法
+      1. 进制算法 
+         将自增ID转化为52+后一位随机字符串. 6位字符串即可容纳十亿条链接.
+         
+```java
+public String creatToken(Long id) {
+    int binary = 52;
+    String format = "DEFGHNOLMRSPQIJK0123456ABCefghiTUVW789XYZabcdjklmnop";
+    //未满6位,填充随机字符串
+    String randomseed = "qrstuvwxyz";
+    StringBuilder stringBuilder = new StringBuilder();
+    binary(id, binary, format, stringBuilder);
+    stringBuilder.append(randomseed.charAt(ThreadLocalRandom.current().nextInt(9)));
+    int minLength = 6;
+    int length=stringBuilder.length();
+    if (length < 6) {
+        int add = 6-length;
+        StringBuilder sb2 = new StringBuilder();
+        for (int i = 0; i < add; i++) {
+            sb2.append(randomseed.charAt(ThreadLocalRandom.current().nextInt(9)));
+        }
+        return sb2.append(stringBuilder).toString();
+    }
+
+    return stringBuilder.toString();
+}
+```
+
+
+
+
+
