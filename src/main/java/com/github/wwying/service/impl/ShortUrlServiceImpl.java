@@ -50,14 +50,14 @@ public class ShortUrlServiceImpl implements ShortUrlService {
         ShortUrl shortUrl = new ShortUrl();
         shortUrl.setUrl(url);
         shortUrl.setHashCode(url.hashCode());
-        shortUrl.setEnabled(SysParamConstants.ENABLED_YES);
+        shortUrl.setEnabled(SysParamConstants.ENABLED_YES.getKey());
         List<ShortUrl> list = shortUrlRepository.listByHashCodeAndUrlAndEnabled(shortUrl);
         if (list.size() > 0) {
             return urlServer + list.get(0).getShortToken();
         }
         shortUrl = new ShortUrl();
         shortUrl.setUrl(url);
-        shortUrl.setEnabled(SysParamConstants.ENABLED_YES);
+        shortUrl.setEnabled(SysParamConstants.ENABLED_YES.getKey());
         shortUrl.setHashCode(url.hashCode());
         shortUrl = shortUrlRepository.save(shortUrl);
         String token = tokenCreator.creatToken(shortUrl.getId());
