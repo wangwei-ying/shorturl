@@ -8,7 +8,7 @@ public class Response<T> {
 
     private T data;
 
-    private String msg;
+    private String msg = null;
     private Response(){
 
     }
